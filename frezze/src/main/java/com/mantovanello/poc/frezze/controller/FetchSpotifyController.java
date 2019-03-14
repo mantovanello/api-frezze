@@ -21,7 +21,7 @@ public class FetchSpotifyController {
 	FetchSpotifyService fetchSpotifyService;
 	
 	@RequestMapping(value = "/fetch-recommendations")
-	public ResponseEntity<Object> getRecommendations() {
-		return new ResponseEntity<>(fetchSpotifyService.getRecommendations(), HttpStatus.OK);
+	public ResponseEntity<Object> fetchRecommendations() {
+		return new ResponseEntity<>(fetchSpotifyService.fetchRecommendations(), HttpStatus.OK);
 	}
 }

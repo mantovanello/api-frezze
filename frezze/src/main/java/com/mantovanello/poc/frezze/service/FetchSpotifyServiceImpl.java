@@ -5,7 +5,6 @@ package com.mantovanello.poc.frezze.service;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,11 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mantovanello.poc.frezze.model.Track;
+import com.mantovanello.poc.frezze.repository.TrackRepository;
 
 /**
  * @author Mantovanello
@@ -30,11 +28,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 	@Autowired
-	RestTemplate restTemplate;
-	private static final int LIMIT = 5;
+	private RestTemplate restTemplate;
+
+	@Autowired
+	private TrackRepository repository;
+
+	private static final int LIMIT = 100;
 
 	@Override
-	public <T> Collection<T> getRecommendations() {
+	public String fetchRecommendations() {
 		HttpHeaders authHeaders = new HttpHeaders();
 		authHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		authHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -55,9 +57,9 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 		headers.setBearerAuth(token);
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.spotify.com/v1/recommendations")
-				.queryParam("limit", Integer.toString(LIMIT)).queryParam("market", "BR").queryParam("seed_genres", "rock")
-				.queryParam("target_energy", "0.5").queryParam("target_popularity", "90")
-				.queryParam("target_valence", "0.7");
+				.queryParam("limit", Integer.toString(LIMIT)).queryParam("market", "BR")
+				.queryParam("seed_genres", "rock").queryParam("target_energy", "0.5")
+				.queryParam("target_popularity", "90").queryParam("target_valence", "0.7");
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -68,22 +70,21 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 			JsonNode actualObj = mapper.readTree(response);
 
 			for (int i = 0; i < LIMIT; i++) {
-				String albumURL = actualObj.path("tracks").path(i).path("album").path("external_urls").path("spotify").asText();
-				String albumThumbnailURL = actualObj.path("tracks").path(i).path("album").path("images").path(2)
-						.path("url").asText();
-				String albumTitle = actualObj.path("tracks").path(i).path("album").path("name").asText();
-				String albumReleaseDate = actualObj.path("tracks").path(i).path("album").path("release_date").asText();
-				String albumReleaseDatePrecision = actualObj.path("tracks").path(i).path("album").path("release_date_precision")
-						.asText();
-				String artistURL = actualObj.path("tracks").path(i).path("artists").path(0).path("external_urls").path("spotify")
-						.asText();
-				String artistName = actualObj.path("tracks").path(i).path("artists").path(0).path("name").asText();
-				long trackDuration = actualObj.path("tracks").path(i).path("duration_ms").asLong();
-				String trackURL = actualObj.path("tracks").path(i).path("external_urls").path("spotify").asText();
-				String trackTitle = actualObj.path("tracks").path(i).path("name").asText();
-				String trackNumber = actualObj.path("tracks").path(i).path("track_number").asText();
-				
-				System.out.println("teste");
+				Track teste = new Track(
+						actualObj.path("tracks").path(i).path("album").path("external_urls").path("spotify").asText(),
+						actualObj.path("tracks").path(i).path("album").path("images").path(2).path("url").asText(),
+						actualObj.path("tracks").path(i).path("album").path("name").asText(),
+						actualObj.path("tracks").path(i).path("album").path("release_date").asText(),
+						actualObj.path("tracks").path(i).path("album").path("release_date_precision").asText(),
+						actualObj.path("tracks").path(i).path("artists").path(0).path("external_urls").path("spotify")
+								.asText(),
+						actualObj.path("tracks").path(i).path("artists").path(0).path("name").asText(),
+						actualObj.path("tracks").path(i).path("duration_ms").asLong(),
+						actualObj.path("tracks").path(i).path("external_urls").path("spotify").asText(),
+						actualObj.path("tracks").path(i).path("name").asText(),
+						actualObj.path("tracks").path(i).path("track_number").asInt());
+				repository.save(teste);
+				System.out.println(teste.toString());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -92,7 +93,7 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 
 		System.out.println(response);
 
-		return null;
+		return "finalizado";
 	}
 
 }
