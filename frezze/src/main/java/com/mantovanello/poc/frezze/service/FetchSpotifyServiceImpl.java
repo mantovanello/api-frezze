@@ -48,7 +48,6 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 				.exchange("https://accounts.spotify.com/api/token", HttpMethod.POST, authEntity, String.class)
 				.getBody();
 
-		System.out.println(authResponse);
 		String token = authResponse.replaceAll("[{}\":,]", " ").split("\\s+")[2];
 		System.out.println(token);
 
@@ -70,7 +69,7 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 			JsonNode actualObj = mapper.readTree(response);
 
 			for (int i = 0; i < LIMIT; i++) {
-				Track teste = new Track(
+				repository.save(new Track(
 						actualObj.path("tracks").path(i).path("album").path("external_urls").path("spotify").asText(),
 						actualObj.path("tracks").path(i).path("album").path("images").path(2).path("url").asText(),
 						actualObj.path("tracks").path(i).path("album").path("name").asText(),
@@ -82,18 +81,14 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 						actualObj.path("tracks").path(i).path("duration_ms").asLong(),
 						actualObj.path("tracks").path(i).path("external_urls").path("spotify").asText(),
 						actualObj.path("tracks").path(i).path("name").asText(),
-						actualObj.path("tracks").path(i).path("track_number").asInt());
-				repository.save(teste);
-				System.out.println(teste.toString());
+						actualObj.path("tracks").path(i).path("track_number").asInt()));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		System.out.println(response);
-
-		return "finalizado";
+		return "{\"sucesso\" : \"Fetch de dados finalizado.\"}";
 	}
 
 }

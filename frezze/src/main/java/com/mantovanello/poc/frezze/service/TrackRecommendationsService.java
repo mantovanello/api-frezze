@@ -3,10 +3,12 @@
  */
 package com.mantovanello.poc.frezze.service;
 
+import com.mantovanello.poc.frezze.dto.TrackRecommendationsResponseTO;
+
 /**
  * @author Mantovanello
  *
  */
 public interface TrackRecommendationsService {
-	public abstract String listRecommendations(String orderBy);
+	public abstract TrackRecommendationsResponseTO listRecommendations();
 }

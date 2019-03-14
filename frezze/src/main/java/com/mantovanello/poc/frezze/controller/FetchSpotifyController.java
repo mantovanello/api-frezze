@@ -18,7 +18,7 @@ import com.mantovanello.poc.frezze.service.FetchSpotifyService;
 @RestController
 public class FetchSpotifyController {
 	@Autowired
-	FetchSpotifyService fetchSpotifyService;
+	private FetchSpotifyService fetchSpotifyService;
 	
 	@RequestMapping(value = "/fetch-recommendations")
 	public ResponseEntity<Object> fetchRecommendations() {
