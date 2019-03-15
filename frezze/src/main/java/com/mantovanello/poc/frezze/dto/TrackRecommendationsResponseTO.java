@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class TrackRecommendationsResponseTO {
 	private List<TrackTO> trackRecommendationsList;
+	
+	public TrackRecommendationsResponseTO() {}
 
 	public TrackRecommendationsResponseTO(List<TrackTO> trackRecommendationsList) {
 		this.trackRecommendationsList = trackRecommendationsList;
