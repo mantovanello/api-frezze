@@ -3,10 +3,10 @@
  */
 package com.mantovanello.poc.frezze.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * @author Mantovanello
@@ -14,41 +14,42 @@ import javax.persistence.Id;
  */
 @Entity
 public class Track {
-
-	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@EmbeddedId
+	private TrackId trackId;
 	private String albumURL;
 	private String albumThumbnailURL;
-	private String albumTitle;
 	private String albumReleaseDate;
-	// JsonProperty(access = Access.WRITE_ONLY)
 	private String albumReleaseDatePrecision;
 	private String artistURL;
-	private String artistName;
 	private Long trackDuration;
 	private String trackURL;
-	private String trackTitle;
 	private Integer trackNumber;
 
 	protected Track() {
 	}
 
-	public Track(String albumURL, String albumThumbnailURL, String albumTitle, String albumReleaseDate,
-			String albumReleaseDatePrecision, String artistURL, String artistName, Long trackDuration, String trackURL,
-			String trackTitle, Integer trackNumber) {
-
+	public Track(TrackId trackId, String albumURL, String albumThumbnailURL, String albumReleaseDate,
+			String albumReleaseDatePrecision, String artistURL, Long trackDuration, String trackURL,
+			Integer trackNumber) {
+		this.trackId = trackId;
 		this.albumURL = albumURL;
 		this.albumThumbnailURL = albumThumbnailURL;
-		this.albumTitle = albumTitle;
 		this.albumReleaseDate = albumReleaseDate;
 		this.albumReleaseDatePrecision = albumReleaseDatePrecision;
 		this.artistURL = artistURL;
-		this.artistName = artistName;
 		this.trackDuration = trackDuration;
 		this.trackURL = trackURL;
-		this.trackTitle = trackTitle;
 		this.trackNumber = trackNumber;
+	}
+
+	public TrackId getTrackId() {
+		return trackId;
+	}
+
+	public void setTrackId(TrackId trackId) {
+		this.trackId = trackId;
 	}
 
 	public String getAlbumURL() {
@@ -65,14 +66,6 @@ public class Track {
 
 	public void setAlbumThumbnailURL(String albumThumbnailURL) {
 		this.albumThumbnailURL = albumThumbnailURL;
-	}
-
-	public String getAlbumTitle() {
-		return albumTitle;
-	}
-
-	public void setAlbumTitle(String albumTitle) {
-		this.albumTitle = albumTitle;
 	}
 
 	public String getAlbumReleaseDate() {
@@ -99,14 +92,6 @@ public class Track {
 		this.artistURL = artistURL;
 	}
 
-	public String getArtistName() {
-		return artistName;
-	}
-
-	public void setArtistName(String artistName) {
-		this.artistName = artistName;
-	}
-
 	public Long getTrackDuration() {
 		return trackDuration;
 	}
@@ -123,14 +108,6 @@ public class Track {
 		this.trackURL = trackURL;
 	}
 
-	public String getTrackTitle() {
-		return trackTitle;
-	}
-
-	public void setTrackTitle(String trackTitle) {
-		this.trackTitle = trackTitle;
-	}
-
 	public Integer getTrackNumber() {
 		return trackNumber;
 	}
@@ -142,9 +119,8 @@ public class Track {
 	@Override
 	public String toString() {
 		return String.format(
-				"Track [id=%s, albumURL=%s, albumThumbnailURL=%s, albumTitle=%s, albumReleaseDate=%s, albumReleaseDatePrecision=%s, artistURL=%s, artistName=%s, trackDuration=%s, trackURL=%s, trackTitle=%s, trackNumber=%s]",
-				id, albumURL, albumThumbnailURL, albumTitle, albumReleaseDate, albumReleaseDatePrecision, artistURL,
-				artistName, trackDuration, trackURL, trackTitle, trackNumber);
+				"Track [id=%s, trackId=%s, albumURL=%s, albumThumbnailURL=%s, albumReleaseDate=%s, albumReleaseDatePrecision=%s, artistURL=%s, trackDuration=%s, trackURL=%s, trackNumber=%s]",
+				id, trackId, albumURL, albumThumbnailURL, albumReleaseDate, albumReleaseDatePrecision, artistURL,
+				trackDuration, trackURL, trackNumber);
 	}
-
 }

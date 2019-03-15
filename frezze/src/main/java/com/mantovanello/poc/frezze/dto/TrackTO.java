@@ -24,13 +24,13 @@ public class TrackTO {
 	public TrackTO(Track track) {
 		this.albumURL = track.getAlbumURL();
 		this.albumThumbnailURL = track.getAlbumThumbnailURL();
-		this.albumTitle = track.getAlbumTitle();
+		this.albumTitle = track.getTrackId().getAlbumTitle();
 		this.albumReleaseDate = track.getAlbumReleaseDate();
 		this.artistURL = track.getArtistURL();
-		this.artistName = track.getArtistName();
+		this.artistName = track.getTrackId().getArtistName();
 		this.trackDuration = track.getTrackDuration();
 		this.trackURL = track.getTrackURL();
-		this.trackTitle = track.getTrackTitle();
+		this.trackTitle = track.getTrackId().getTrackTitle();
 		this.trackNumber = track.getTrackNumber();
 	}
 

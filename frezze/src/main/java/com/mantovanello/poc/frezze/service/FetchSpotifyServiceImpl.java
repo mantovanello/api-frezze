@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mantovanello.poc.frezze.model.Track;
+import com.mantovanello.poc.frezze.model.TrackId;
 import com.mantovanello.poc.frezze.repository.TrackRepository;
 
 /**
@@ -70,17 +71,18 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 
 			for (int i = 0; i < LIMIT; i++) {
 				repository.save(new Track(
+						new TrackId(
+								actualObj.path("tracks").path(i).path("album").path("name").asText(),
+								actualObj.path("tracks").path(i).path("artists").path(0).path("name").asText(),
+								actualObj.path("tracks").path(i).path("name").asText()),
 						actualObj.path("tracks").path(i).path("album").path("external_urls").path("spotify").asText(),
 						actualObj.path("tracks").path(i).path("album").path("images").path(2).path("url").asText(),
-						actualObj.path("tracks").path(i).path("album").path("name").asText(),
 						actualObj.path("tracks").path(i).path("album").path("release_date").asText(),
 						actualObj.path("tracks").path(i).path("album").path("release_date_precision").asText(),
 						actualObj.path("tracks").path(i).path("artists").path(0).path("external_urls").path("spotify")
 								.asText(),
-						actualObj.path("tracks").path(i).path("artists").path(0).path("name").asText(),
 						actualObj.path("tracks").path(i).path("duration_ms").asLong(),
 						actualObj.path("tracks").path(i).path("external_urls").path("spotify").asText(),
-						actualObj.path("tracks").path(i).path("name").asText(),
 						actualObj.path("tracks").path(i).path("track_number").asInt()));
 			}
 		} catch (IOException e) {
