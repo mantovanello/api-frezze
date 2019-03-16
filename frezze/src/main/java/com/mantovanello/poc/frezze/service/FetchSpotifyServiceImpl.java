@@ -33,6 +33,7 @@ import com.mantovanello.poc.frezze.repository.TrackRepository;
 public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 
 	private static final Logger logger = LoggerFactory.getLogger(FetchSpotifyServiceImpl.class);
+	
 	@Autowired
 	private RestTemplate restTemplate;
 

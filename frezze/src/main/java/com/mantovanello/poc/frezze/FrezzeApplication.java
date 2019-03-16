@@ -2,15 +2,10 @@ package com.mantovanello.poc.frezze;
 
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-
-import com.mantovanello.poc.frezze.controller.FetchSpotifyController;
 
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -21,18 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class FrezzeApplication implements ApplicationRunner {
-
-	@Autowired
-	private FetchSpotifyController fetchSpotifyController;
+public class FrezzeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FrezzeApplication.class, args);
-	}
-
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		fetchSpotifyController.fetchRecommendations().getBody();
 	}
 
 	@Bean

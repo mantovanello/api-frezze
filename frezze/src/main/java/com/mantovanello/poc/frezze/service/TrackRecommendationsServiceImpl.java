@@ -25,6 +25,7 @@ import com.mantovanello.poc.frezze.repository.TrackRepository;
 public class TrackRecommendationsServiceImpl implements TrackRecommendationsService {
 
 	private static final Logger logger = LoggerFactory.getLogger(TrackRecommendationsServiceImpl.class);
+	
 	@Autowired
 	private TrackRepository repository;
 
