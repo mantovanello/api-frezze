@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
  */
 @Entity
 public class Track {
+
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@EmbeddedId
@@ -28,6 +29,7 @@ public class Track {
 	private Integer trackNumber;
 
 	protected Track() {
+
 	}
 
 	public Track(TrackId trackId, String albumURL, String albumThumbnailURL, String albumReleaseDate,
@@ -123,4 +125,5 @@ public class Track {
 				id, trackId, albumURL, albumThumbnailURL, albumReleaseDate, albumReleaseDatePrecision, artistURL,
 				trackDuration, trackURL, trackNumber);
 	}
+
 }

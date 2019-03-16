@@ -22,7 +22,6 @@ public class FrezzeApplicationTests {
 	@Test
 	public void exampleTest() throws Exception {
 		this.mvc.perform(get("/api/fetch-recommendations")).andExpect(status().isOk())
-				.andExpect(content().string("{\"sucesso\" : \"Fetch de dados finalizado.\"}"));
+				.andExpect(content().string("{\"success\" : \"Data successfully retrieved from Spotify\"}"));
 	}
-
 }

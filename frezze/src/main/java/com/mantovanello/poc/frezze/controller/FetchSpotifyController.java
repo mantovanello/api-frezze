@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 public class FetchSpotifyController {
+
 	@Autowired
 	private FetchSpotifyService fetchSpotifyService;
 
@@ -27,4 +28,5 @@ public class FetchSpotifyController {
 	public ResponseEntity<String> fetchRecommendations() {
 		return ResponseEntity.ok(fetchSpotifyService.fetchRecommendations());
 	}
+
 }

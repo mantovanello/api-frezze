@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 public class TrackRecommendationsController {
+
 	@Autowired
 	private TrackRecommendationsService trackRecommendationsService;
 
@@ -28,4 +29,5 @@ public class TrackRecommendationsController {
 	public ResponseEntity<TrackRecommendationsResponseTO> listRecommendations() {
 		return ResponseEntity.ok(trackRecommendationsService.listRecommendations());
 	}
+
 }

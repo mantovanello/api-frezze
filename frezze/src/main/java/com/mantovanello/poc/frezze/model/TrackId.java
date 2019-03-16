@@ -14,16 +14,15 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class TrackId implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+
 	private String albumTitle;
 	private String artistName;
 	private String trackTitle;
 
 	protected TrackId() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public TrackId(String albumTitle, String artistName, String trackTitle) {
@@ -82,4 +81,5 @@ public class TrackId implements Serializable {
 		return Objects.equals(albumTitle, other.albumTitle) && Objects.equals(artistName, other.artistName)
 				&& Objects.equals(trackTitle, other.trackTitle);
 	}
+
 }

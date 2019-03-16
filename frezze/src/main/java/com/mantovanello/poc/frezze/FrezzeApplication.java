@@ -22,19 +22,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 public class FrezzeApplication implements ApplicationRunner {
+
 	@Autowired
 	private FetchSpotifyController fetchSpotifyController;
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(FrezzeApplication.class, args);
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		String response = fetchSpotifyController.fetchRecommendations().getBody();
-		System.out.println(response);
+		fetchSpotifyController.fetchRecommendations().getBody();
 	}
-	
+
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
@@ -43,16 +43,16 @@ public class FrezzeApplication implements ApplicationRunner {
 	@Bean
 	public Docket productApi() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-		.apis(RequestHandlerSelectors.basePackage("com.mantovanello.poc.frezze.controller")).build().apiInfo(apiInfo());
+				.apis(RequestHandlerSelectors.basePackage("com.mantovanello.poc.frezze.controller")).build()
+				.apiInfo(apiInfo());
 	}
-	
+
 	private ApiInfo apiInfo() {
-	    return new ApiInfo(
-	      "Frezze's REST API POC", 
-	      "API responsible to fetch some track recommendations data from Spotify API and retrieve it in a simpler form as a resource.", 
-	      "1.0", 
-	      "Terms Of Service", 
-	      new Contact("Felipe Mantovanello", "https://github.com/mantovanello", "felipe.mantovanello@gmail.com"), 
-	      "License", "", Collections.emptyList());
+		return new ApiInfo("Frezze's REST API POC",
+				"API responsible to fetch some track recommendations data from Spotify API and retrieve it in a simpler form as a resource.",
+				"1.0", "Terms Of Service",
+				new Contact("Felipe Mantovanello", "https://github.com/mantovanello", "felipe.mantovanello@gmail.com"),
+				"License", "", Collections.emptyList());
 	}
+
 }

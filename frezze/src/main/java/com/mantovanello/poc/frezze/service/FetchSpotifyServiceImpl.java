@@ -6,6 +6,8 @@ package com.mantovanello.poc.frezze.service;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mantovanello.poc.frezze.exception.FetchSpotifyProcessJSONResponseException;
 import com.mantovanello.poc.frezze.model.Track;
 import com.mantovanello.poc.frezze.model.TrackId;
 import com.mantovanello.poc.frezze.repository.TrackRepository;
@@ -28,6 +31,8 @@ import com.mantovanello.poc.frezze.repository.TrackRepository;
 
 @Service
 public class FetchSpotifyServiceImpl implements FetchSpotifyService {
+
+	private static final Logger logger = LoggerFactory.getLogger(FetchSpotifyServiceImpl.class);
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -38,33 +43,8 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 
 	@Override
 	public String fetchRecommendations() {
-		HttpHeaders authHeaders = new HttpHeaders();
-		authHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		authHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		authHeaders.setBasicAuth("143b789afb6548598e2df1d7494531ab", "c67ae18e2d1a4edba3cc8a31225726e5");
-
-		HttpEntity<?> authEntity = new HttpEntity<>("grant_type=client_credentials", authHeaders);
-
-		String authResponse = restTemplate
-				.exchange("https://accounts.spotify.com/api/token", HttpMethod.POST, authEntity, String.class)
-				.getBody();
-
-		String token = authResponse.replaceAll("[{}\":,]", " ").split("\\s+")[2];
-		System.out.println(token);
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setBearerAuth(token);
-
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.spotify.com/v1/recommendations")
-				.queryParam("limit", Integer.toString(LIMIT)).queryParam("market", "BR")
-				.queryParam("seed_genres", "rock").queryParam("target_energy", "0.5")
-				.queryParam("target_popularity", "90").queryParam("target_valence", "0.7");
-
-		HttpEntity<?> entity = new HttpEntity<>(headers);
-
-		String response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
-
+		String response = getTrackRecommendationsFromSpotifyAPI(getTokenFromSpotifyAPI());
+		// String response = "{ \"teste : \"bla\"}";
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode actualObj = mapper.readTree(response);
@@ -86,11 +66,42 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 						actualObj.path("tracks").path(i).path("track_number").asInt()));
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Could not process Spotify JSON response: ", e);
+			throw new FetchSpotifyProcessJSONResponseException();
 		}
 
-		return "{\"sucesso\" : \"Fetch de dados finalizado.\"}";
+		return "{\"success\" : \"Data successfully retrieved from Spotify\"}";
+	}
+
+	private String getTokenFromSpotifyAPI() {
+		HttpHeaders authHeaders = new HttpHeaders();
+		authHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		authHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		authHeaders.setBasicAuth("143b789afb6548598e2df1d7494531ab", "c67ae18e2d1a4edba3cc8a31225726e5");
+
+		HttpEntity<?> authEntity = new HttpEntity<>("grant_type=client_credentials", authHeaders);
+
+		String authResponse = restTemplate
+				.exchange("https://accounts.spotify.com/api/token", HttpMethod.POST, authEntity, String.class)
+				.getBody();
+
+		return authResponse.replaceAll("[{}\":,]", " ").split("\\s+")[2];
+	}
+
+	private String getTrackRecommendationsFromSpotifyAPI(String token) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setBearerAuth(token);
+
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://api.spotify.com/v1/recommendations")
+				.queryParam("limit", Integer.toString(LIMIT)).queryParam("market", "BR")
+				.queryParam("seed_genres", "rock").queryParam("target_energy", "0.5")
+				.queryParam("target_popularity", "90").queryParam("target_valence", "0.7");
+
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		logger.info("Spotify API Request: " + entity.toString());
+
+		return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 	}
 
 }

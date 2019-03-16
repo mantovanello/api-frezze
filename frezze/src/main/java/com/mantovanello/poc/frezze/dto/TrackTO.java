@@ -10,6 +10,7 @@ import com.mantovanello.poc.frezze.model.Track;
  *
  */
 public class TrackTO {
+
 	private String albumURL;
 	private String albumThumbnailURL;
 	private String albumTitle;
@@ -113,4 +114,5 @@ public class TrackTO {
 	public void setTrackNumber(Integer trackNumber) {
 		this.trackNumber = trackNumber;
 	}
+
 }

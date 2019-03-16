@@ -10,5 +10,7 @@ import com.mantovanello.poc.frezze.dto.TrackRecommendationsResponseTO;
  *
  */
 public interface TrackRecommendationsService {
+	
 	public abstract TrackRecommendationsResponseTO listRecommendations();
+	
 }

@@ -8,5 +8,7 @@ package com.mantovanello.poc.frezze.service;
  *
  */
 public interface FetchSpotifyService {
+	
 	public abstract String fetchRecommendations();
+	
 }
