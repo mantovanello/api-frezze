@@ -39,7 +39,7 @@ public class TrackRecommendationsControllerTest {
 	public void shouldReturnTrackRecommendationsList() throws Exception {
 		//when(trackRecommendationsService.listRecommendations()).thenReturn("Hello Mock");
 		this.mvc.perform(get("/list-recommendations")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$.length()", greaterThanOrEqualTo(10)));
+				.andExpect(jsonPath("$.length()", greaterThanOrEqualTo(100)));
 	}
 	
 }
