@@ -40,7 +40,7 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 	@Autowired
 	private TrackRepository repository;
 
-	private static final int LIMIT = 100;
+	private static final int LIMIT = 10;
 
 	@Override
 	public String fetchRecommendations() {
