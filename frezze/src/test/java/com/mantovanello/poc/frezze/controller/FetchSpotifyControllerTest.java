@@ -30,7 +30,7 @@ public class FetchSpotifyControllerTest {
 	
 	@Test
 	public void shouldReturnSuccessJSONMessage() throws Exception {
-		this.mvc.perform(get("/api/fetch-recommendations")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		this.mvc.perform(get("/fetch-recommendations")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(content().json("{\"success\" : \"Data successfully retrieved from Spotify\"}"));
 	}
 	

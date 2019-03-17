@@ -23,7 +23,7 @@ public class FetchSpotifyController {
 	@Autowired
 	private FetchSpotifyService fetchSpotifyService;
 
-	@RequestMapping(value = "/api/fetch-recommendations", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/fetch-recommendations", method = RequestMethod.GET, produces = "application/json")
 	@ApiOperation(value = "Retrieve track recommendations data from Spotify API with a set of fixed parameters.", response = String.class)
 	public ResponseEntity<String> fetchRecommendations() {
 		return ResponseEntity.ok(fetchSpotifyService.fetchRecommendations());

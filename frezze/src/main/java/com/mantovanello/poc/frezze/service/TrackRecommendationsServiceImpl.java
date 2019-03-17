@@ -30,7 +30,7 @@ public class TrackRecommendationsServiceImpl implements TrackRecommendationsServ
 	private TrackRepository repository;
 
 	@Override
-	public TrackRecommendationsResponseTO listRecommendations() {
+	public List<TrackTO> listRecommendations() {
 		List<TrackTO> trackRecommendationsList = new ArrayList<>();
 		Iterable<Track> allTrackRecommendations = repository.findAll();
 
@@ -45,7 +45,7 @@ public class TrackRecommendationsServiceImpl implements TrackRecommendationsServ
 			trackRecommendationsList.add(new TrackTO(track));
 		});
 
-		return new TrackRecommendationsResponseTO(trackRecommendationsList);
+		return trackRecommendationsList;
 	}
 
 }

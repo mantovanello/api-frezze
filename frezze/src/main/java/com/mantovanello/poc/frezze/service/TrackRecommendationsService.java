@@ -3,7 +3,9 @@
  */
 package com.mantovanello.poc.frezze.service;
 
-import com.mantovanello.poc.frezze.dto.TrackRecommendationsResponseTO;
+import java.util.List;
+
+import com.mantovanello.poc.frezze.dto.TrackTO;
 
 /**
  * @author Mantovanello
@@ -11,6 +13,6 @@ import com.mantovanello.poc.frezze.dto.TrackRecommendationsResponseTO;
  */
 public interface TrackRecommendationsService {
 	
-	public abstract TrackRecommendationsResponseTO listRecommendations();
+	public abstract List<TrackTO> listRecommendations();
 	
 }
