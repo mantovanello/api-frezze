@@ -30,10 +30,14 @@ public class TrackRecommendationsControllerTest {
 	@Autowired
 	private MockMvc mvc;
 
+	/**
+	 * Verify if list-recommendations is successfully executed
+	 */
 	@Test
 	public void shouldReturnTrackRecommendationsList() throws Exception {
-		this.mvc.perform(get("/list-recommendations")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		this.mvc.perform(get("/list-recommendations")).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.length()", greaterThanOrEqualTo(100)));
 	}
-	
+
 }

@@ -14,6 +14,11 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author Mantovanello
+ *
+ *         Spring Boot main application
+ */
 @SpringBootApplication
 @EnableSwagger2
 public class FrezzeApplication {
@@ -27,6 +32,9 @@ public class FrezzeApplication {
 		return new RestTemplate();
 	}
 
+	/**
+	 * Set base controller package to be scanned by Swagger2 API
+	 */
 	@Bean
 	public Docket productApi() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
@@ -34,6 +42,10 @@ public class FrezzeApplication {
 				.apiInfo(apiInfo());
 	}
 
+	/**
+	 * Define a few informations about the developed API to be displayed in
+	 * Swagger's UI
+	 */
 	private ApiInfo apiInfo() {
 		return new ApiInfo("Frezze's REST API POC",
 				"API responsible to fetch some track recommendations data from Spotify API and retrieve it in a simpler form as a resource.",

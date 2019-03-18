@@ -11,7 +11,8 @@ import com.mantovanello.poc.frezze.model.TrackId;
 /**
  * @author Mantovanello
  *
+ *         Interface used to call repository (database) operations
  */
 public interface TrackRepository extends CrudRepository<Track, TrackId> {
-	
+
 }

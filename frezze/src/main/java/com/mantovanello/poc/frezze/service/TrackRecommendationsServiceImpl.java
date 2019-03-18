@@ -24,10 +24,13 @@ import com.mantovanello.poc.frezze.repository.TrackRepository;
 public class TrackRecommendationsServiceImpl implements TrackRecommendationsService {
 
 	private static final Logger logger = LoggerFactory.getLogger(TrackRecommendationsServiceImpl.class);
-	
+
 	@Autowired
 	private TrackRepository repository;
 
+	/**
+	 * Retrieve track recommendations from database
+	 */
 	@Override
 	public List<TrackTO> listRecommendations() {
 		List<TrackTO> trackRecommendationsList = new ArrayList<>();

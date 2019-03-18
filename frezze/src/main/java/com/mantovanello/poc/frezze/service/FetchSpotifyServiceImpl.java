@@ -28,12 +28,11 @@ import com.mantovanello.poc.frezze.repository.TrackRepository;
  * @author Mantovanello
  *
  */
-
 @Service
 public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 
 	private static final Logger logger = LoggerFactory.getLogger(FetchSpotifyServiceImpl.class);
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -42,10 +41,14 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 
 	private static final int LIMIT = 100;
 
+	/**
+	 * Parse JSON message retrieved by Spotify's recommendation API and persist in
+	 * database
+	 */
 	@Override
-	public String fetchRecommendations() {
-		String response = getTrackRecommendationsFromSpotifyAPI(getTokenFromSpotifyAPI());
-		
+	public String fetchRecommendations(String token) {
+		String response = getTrackRecommendationsFromSpotifyAPI(token);
+
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode actualObj = mapper.readTree(response);
@@ -74,21 +77,10 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 		return "{\"success\" : \"Data successfully retrieved from Spotify\"}";
 	}
 
-	private String getTokenFromSpotifyAPI() {
-		HttpHeaders authHeaders = new HttpHeaders();
-		authHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		authHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		authHeaders.setBasicAuth("143b789afb6548598e2df1d7494531ab", "c67ae18e2d1a4edba3cc8a31225726e5");
-
-		HttpEntity<?> authEntity = new HttpEntity<>("grant_type=client_credentials", authHeaders);
-
-		String authResponse = restTemplate
-				.exchange("https://accounts.spotify.com/api/token", HttpMethod.POST, authEntity, String.class)
-				.getBody();
-
-		return authResponse.replaceAll("[{}\":,]", " ").split("\\s+")[2];
-	}
-
+	/**
+	 * Retrieve data from Spotify's recommendations API using a token generated
+	 * previously by getSimpleClientToken()
+	 */
 	private String getTrackRecommendationsFromSpotifyAPI(String token) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -103,6 +95,26 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 		logger.info("Spotify API Request: " + entity.toString());
 
 		return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
+	}
+
+	/**
+	 * Invoke Spotify's authorization API to generate a token used in other calls to
+	 * it's public API
+	 */
+	@Override
+	public String getSimpleClientToken() {
+		HttpHeaders authHeaders = new HttpHeaders();
+		authHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		authHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		authHeaders.setBasicAuth("143b789afb6548598e2df1d7494531ab", "c67ae18e2d1a4edba3cc8a31225726e5");
+
+		HttpEntity<?> authEntity = new HttpEntity<>("grant_type=client_credentials", authHeaders);
+
+		String authResponse = restTemplate
+				.exchange("https://accounts.spotify.com/api/token", HttpMethod.POST, authEntity, String.class)
+				.getBody();
+
+		return authResponse.replaceAll("[{}\":,]", " ").split("\\s+")[2];
 	}
 
 }

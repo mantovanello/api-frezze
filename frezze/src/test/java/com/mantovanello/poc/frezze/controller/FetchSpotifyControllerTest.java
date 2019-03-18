@@ -27,11 +27,15 @@ public class FetchSpotifyControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
-	
+
+	/**
+	 * Verify if fetch-recommendations is successfully executed
+	 */
 	@Test
 	public void shouldReturnSuccessJSONMessage() throws Exception {
-		this.mvc.perform(get("/fetch-recommendations")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		this.mvc.perform(get("/fetch-recommendations")).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(content().json("{\"success\" : \"Data successfully retrieved from Spotify\"}"));
 	}
-	
+
 }

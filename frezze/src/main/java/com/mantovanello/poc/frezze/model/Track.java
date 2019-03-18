@@ -5,18 +5,15 @@ package com.mantovanello.poc.frezze.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 /**
  * @author Mantovanello
  *
+ *         Define Track entity model
  */
 @Entity
 public class Track {
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	@EmbeddedId
 	private TrackId trackId;
 	private String albumURL;
@@ -121,8 +118,8 @@ public class Track {
 	@Override
 	public String toString() {
 		return String.format(
-				"Track [id=%s, trackId=%s, albumURL=%s, albumThumbnailURL=%s, albumReleaseDate=%s, albumReleaseDatePrecision=%s, artistURL=%s, trackDuration=%s, trackURL=%s, trackNumber=%s]",
-				id, trackId, albumURL, albumThumbnailURL, albumReleaseDate, albumReleaseDatePrecision, artistURL,
+				"Track [trackId=%s, albumURL=%s, albumThumbnailURL=%s, albumReleaseDate=%s, albumReleaseDatePrecision=%s, artistURL=%s, trackDuration=%s, trackURL=%s, trackNumber=%s]",
+				trackId, albumURL, albumThumbnailURL, albumReleaseDate, albumReleaseDatePrecision, artistURL,
 				trackDuration, trackURL, trackNumber);
 	}
 

@@ -23,10 +23,15 @@ public class FetchSpotifyController {
 	@Autowired
 	private FetchSpotifyService fetchSpotifyService;
 
+	/**
+	 * Call service layer to authenticate and retrieve data from Spotify's public
+	 * API
+	 */
 	@RequestMapping(value = "/fetch-recommendations", method = RequestMethod.GET, produces = "application/json")
 	@ApiOperation(value = "Retrieve track recommendations data from Spotify API with a set of fixed parameters.", response = String.class)
 	public ResponseEntity<String> fetchRecommendations() {
-		return ResponseEntity.ok(fetchSpotifyService.fetchRecommendations());
+		String token = fetchSpotifyService.getSimpleClientToken();
+		return ResponseEntity.ok(fetchSpotifyService.fetchRecommendations(token));
 	}
 
 }

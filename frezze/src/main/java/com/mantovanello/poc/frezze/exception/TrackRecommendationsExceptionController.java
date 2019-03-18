@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * @author Mantovanello
- *
+ * 
+ *         Define exception in case of no data found in database
  */
 @ControllerAdvice
 public class TrackRecommendationsExceptionController {

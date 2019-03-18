@@ -13,13 +13,15 @@ import com.mantovanello.poc.frezze.controller.FetchSpotifyController;
 /**
  * @author Mantovanello
  *
+ *         Load new track recommendations retrieved from Spotify's public API
+ *         into database
  */
 @Component
 public class LoadDatabase {
 
 	@Autowired
 	private FetchSpotifyController fetchSpotifyController;
-	
+
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		fetchSpotifyController.fetchRecommendations();

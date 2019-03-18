@@ -20,14 +20,17 @@ import com.mantovanello.poc.frezze.controller.TrackRecommendationsController;
 public class FrezzeApplicationTests {
 
 	@Autowired
-    private FetchSpotifyController fetchSpotifyController;
-	
+	private FetchSpotifyController fetchSpotifyController;
+
 	@Autowired
 	private TrackRecommendationsController trackRecommendationsController;
 
-    @Test
-    public void contexLoads() throws Exception {
-        assertThat(fetchSpotifyController).isNotNull();
-        assertThat(trackRecommendationsController).isNotNull();
-    }
+	/**
+	 * Verify if controller beans are loaded correctly
+	 */
+	@Test
+	public void contexLoads() throws Exception {
+		assertThat(fetchSpotifyController).isNotNull();
+		assertThat(trackRecommendationsController).isNotNull();
+	}
 }

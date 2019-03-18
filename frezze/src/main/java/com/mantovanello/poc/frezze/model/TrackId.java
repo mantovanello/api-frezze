@@ -11,6 +11,7 @@ import javax.persistence.Embeddable;
 /**
  * @author Mantovanello
  *
+ *         Define Track entity PK
  */
 @Embeddable
 public class TrackId implements Serializable {

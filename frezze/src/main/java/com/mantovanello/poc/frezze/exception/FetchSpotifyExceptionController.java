@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 /**
  * @author Mantovanello
  *
+ *         Define exception in case of unexpected JSON returned by Spotify's
+ *         public API
  */
 @ControllerAdvice
 public class FetchSpotifyExceptionController {

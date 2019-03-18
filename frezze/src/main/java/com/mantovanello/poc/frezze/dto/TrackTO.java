@@ -8,6 +8,8 @@ import com.mantovanello.poc.frezze.model.Track;
 /**
  * @author Mantovanello
  *
+ *         Define the track transfer object (TO) to be returned by
+ *         list-recommendations resource
  */
 public class TrackTO {
 
