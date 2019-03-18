@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mantovanello.poc.frezze.dto.TrackRecommendationsResponseTO;
 import com.mantovanello.poc.frezze.dto.TrackTO;
 import com.mantovanello.poc.frezze.exception.TrackRecommendationsNoContentException;
 import com.mantovanello.poc.frezze.model.Track;
