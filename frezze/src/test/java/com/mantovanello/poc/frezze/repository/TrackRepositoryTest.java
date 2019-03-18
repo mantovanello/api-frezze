@@ -4,9 +4,6 @@
 package com.mantovanello.poc.frezze.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mantovanello.poc.frezze.model.Track;
 import com.mantovanello.poc.frezze.model.TrackId;
-import com.mantovanello.poc.frezze.repository.TrackRepository;
 
 /**
  * @author Mantovanello

@@ -45,7 +45,7 @@ public class FetchSpotifyServiceImpl implements FetchSpotifyService {
 	@Override
 	public String fetchRecommendations() {
 		String response = getTrackRecommendationsFromSpotifyAPI(getTokenFromSpotifyAPI());
-		// String response = "{ \"teste : \"bla\"}";
+		
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode actualObj = mapper.readTree(response);
