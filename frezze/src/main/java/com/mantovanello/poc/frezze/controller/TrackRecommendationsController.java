@@ -28,7 +28,7 @@ public class TrackRecommendationsController {
 	private TrackRecommendationsService trackRecommendationsService;
 
 	@RequestMapping(value = "/list-recommendations", method = RequestMethod.GET, produces = "application/json")
-	@CrossOrigin(origins = {"http://localhost:4200", "http://179.159.58.65:4200", "https://api-frezze.firebaseapp.com"})
+	@CrossOrigin(origins = {"http://179.159.58.65:4200", "https://frezze-app-poc.firebaseapp.com"})
 	@ApiOperation(value = "List previous fetched track recommendations saved in database.", response = TrackTO.class)
 	public ResponseEntity<List<TrackTO>> listRecommendations() {
 		return ResponseEntity.ok(trackRecommendationsService.listRecommendations());
